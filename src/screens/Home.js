@@ -2,8 +2,6 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import useAuth from "../hooks/useAuth";
 
-
-
 const Home = () => {
     const navigation = useNavigation();
     const { auth, setAuth } = useAuth();
