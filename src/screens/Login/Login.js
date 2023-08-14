@@ -8,7 +8,13 @@ const Login = () => {
     const [password, setPassword] = useState()
     
     const handleLogin= async() => {
-
+        try {
+            const {data} = await axios.post("https://barreltrackerback.onrender.com/api/user/login", {email, password});
+            console.log(data)
+            await AsyncStorage.setItem('token', data?.token)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
