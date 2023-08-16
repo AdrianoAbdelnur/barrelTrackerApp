@@ -59,7 +59,7 @@ const Scan = () => {
 
             <TouchableOpacity
                 style={{ backgroundColor: '#ABC' }}
-                onPress={() => navigation.navigate('AddBarrel', { code: texto })}>
+                onPress={() => navigation.navigate('Home')}>
                 <Text
                     style={{
                         color: '000',
@@ -68,7 +68,7 @@ const Scan = () => {
                     }}
                 >Go AddBarrel</Text>
             </TouchableOpacity>
-            <Text>{auth}</Text>
+            <Text>{auth.role}</Text>
         </View>
     )
 
