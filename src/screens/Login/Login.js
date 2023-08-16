@@ -2,20 +2,13 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, A
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
+
 
 const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState()
-    
-    const handleLogin= async() => {
-        try {
-            const {data} = await axios.post("https://barreltrackerback.onrender.com/api/user/login", {email, password});
-            console.log(data)
-            await AsyncStorage.setItem('token', data?.token)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const {login} = useAuth();
 
     return (
         <View style={styles.container}>
@@ -37,7 +30,7 @@ const Login = () => {
             />
             <TouchableOpacity
                 style={styles.loginButton}
-                onPress={handleLogin}
+                onPress={()=>login(email, password)}
                 >
                 <Text
                     style={{

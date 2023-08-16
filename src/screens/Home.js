@@ -4,7 +4,8 @@ import useAuth from "../hooks/useAuth";
 
 const Home = () => {
     const navigation = useNavigation();
-    const { auth, setAuth } = useAuth();
+    const { setAuth, logout } = useAuth();
+
 
     return (
         <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'space-around', flexDirection: "row", flexWrap: "wrap" }}>
@@ -32,7 +33,7 @@ const Home = () => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
-                onPress={() => setAuth("chau pescau")}>
+                onPress={() => logout()}>
                 <Text
                     style={{
                         color: 'white',
