@@ -59,7 +59,7 @@ const Scan = () => {
 
             <TouchableOpacity
                 style={{ backgroundColor: '#ABC' }}
-                onPress={() => navigation.navigate('Home')}>
+                onPress={() => navigation.navigate('NewBarrel')}>
                 <Text
                     style={{
                         color: '000',
@@ -71,7 +71,6 @@ const Scan = () => {
             <Text>{auth.role}</Text>
         </View>
     )
-
 
 
 }
