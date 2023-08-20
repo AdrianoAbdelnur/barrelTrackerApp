@@ -3,14 +3,12 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import useAuth from "../hooks/useAuth";
 
 const Scan = () => {
     const [hasPermission, setHasPermission] = useState(null)
     const [scanned, setScanned] = useState(false);
-    const [texto, setTexto] = useState('Not yet scanned')
+    const [texto, setTexto] = useState('')
     const navigation = useNavigation();
-    const { auth } = useAuth();
 
     const askForCameraPermission = () => {
         (async () => {
@@ -23,13 +21,16 @@ const Scan = () => {
         askForCameraPermission();
     }, [])
 
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
         setTexto(data)
         goBarrelScreen()
     }
 
-    const goBarrelScreen = () => navigation.navigate('AddBarrel', { code: texto })
+
+    
+
+    const goBarrelScreen = () => navigation.navigate('NewBarrel', { code: texto })
 
     if (hasPermission === null)
         return (
@@ -51,24 +52,23 @@ const Scan = () => {
             <View style={styles.barCodeBox}>
                 <BarCodeScanner
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={{ height: 400, width: 400 }} />
+                    style={{ height: 500, width: 500 }} />
             </View>
             <Text style={styles.mainText}>{texto}</Text>
             {scanned && <Button title={'scan again'} onPress={() => setScanned(false)} color='tomato' />}
 
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={{ backgroundColor: '#ABC' }}
                 onPress={() => navigation.navigate('NewBarrel')}>
                 <Text
                     style={{
-                        color: '000',
+                        color: '#000',
                         fontSize: 40,
                         margin: 10
                     }}
                 >Go AddBarrel</Text>
-            </TouchableOpacity>
-            <Text>{auth.role}</Text>
+            </TouchableOpacity> */}
         </View>
     )
 

@@ -1,6 +1,8 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import SelectList from 'react-native-select-dropdown'
+import { View, Text, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import DropdownComponent from './Dropdown';
+
+
 
 const NewBarrel = (id) => {
 
@@ -27,9 +29,14 @@ const NewBarrel = (id) => {
   return (
     <View>
       <Text>Add New Barrel</Text>
-      
+       <DropdownComponent/>
+
     </View>
   )
 }
 
 export default NewBarrel
+
+const styles = StyleSheet.create({
+
+});
