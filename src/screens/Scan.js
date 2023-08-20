@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import axios from "axios";
 
 const Scan = () => {
     const [hasPermission, setHasPermission] = useState(null)
@@ -24,7 +25,7 @@ const Scan = () => {
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
         setTexto(data)
-        goBarrelScreen()
+        getBarrel(data)
     }
 
 
@@ -46,6 +47,20 @@ const Scan = () => {
                 <Button title={"Allow camera"} onPress={() => askForCameraPermission()} />
             </View>
         )
+
+        const getBarrel = async(id) => {
+            try {
+                const {data} = await axios("https://barreltrackerback.onrender.com/api/barrel/getABarrel/"+ id);
+                if(data.barrelFound){
+                    if (data?.barrelFound?.statusBarrel === "delivered to customer") {
+                        setConfirmSale(true)
+                    }
+                    setBarrel(data.barrelFound)
+                } else navigation.navigate('NewBarrel', { code: id })
+            } catch (error) {
+                console.log(error)
+            }
+        }    
 
     return (
         <View style={styles.container}>
