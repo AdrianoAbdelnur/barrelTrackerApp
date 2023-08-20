@@ -4,10 +4,9 @@ import DropdownComponent from './Dropdown';
 
 
 
-const NewBarrel = (id) => {
-
-
+const NewBarrel = ({ route }) => {
   
+    const id = route.params.code
     const handleAddNewBarrel = async(capacity) => {
       try {
         const payload = {
@@ -28,7 +27,8 @@ const NewBarrel = (id) => {
 
   return (
     <View>
-      <Text>Add New Barrel</Text>
+      <Text>Add New Barrel with code {id}</Text>
+
        <DropdownComponent/>
 
     </View>
