@@ -6,6 +6,7 @@ import React from 'react';
 import {View, ActivityIndicator, StyleSheet, ImageBackground } from 'react-native'
 import useAuth from '../hooks/useAuth';
 import NewBarrel from '../screens/barrels/NewBarrel';
+import BarrelStatus from '../screens/barrels/BarrelStatus';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ if (auth?.role === 'delivery' || auth?.role === 'admin') {
             <Stack.Screen name="Scan" component={Scan} options={{title: 'Scan'}} />
             <Stack.Screen name="NewBarrel" component={NewBarrel} options={{title: 'New Barrel'}} />
             <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
+            <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{title: 'BarrelStatus'}} />
         </Stack.Navigator>
     ) 
    
