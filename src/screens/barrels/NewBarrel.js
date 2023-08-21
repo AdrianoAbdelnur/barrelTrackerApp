@@ -9,15 +9,24 @@ const NewBarrel = ({ route }) => {
     const navigation=useNavigation();
     const id = route.params.code
     const [capacity, setCapacity] = useState(null)
-    
+    const data = [
+      { label: '50 liters', value: '50' },
+      { label: '30 liters', value: '30' },
+      { label: '20 liters', value: '20' },
+      { label: '10 liters', value: '10' },
+      { label: '4 liters', value: '5' }
+  ];
+
+
+
     const handleAddNewBarrel = async() => {
       try {
         const payload = {
           id: id,
           capacity: capacity
         }
-        await axios.post("https://barreltrackerback.onrender.com/api/barrel/addBarrel", payload)
-        navigation.navigate('BarrelStatus')
+        const {data} = await axios.post("https://barreltrackerback.onrender.com/api/barrel/addBarrel", payload)
+        navigation.navigate('BarrelStatus', {data: data.newBarrel})
       } catch (error) {
         console.log(error)
       }
@@ -29,6 +38,7 @@ const NewBarrel = ({ route }) => {
        <DropdownComponent
           value={capacity}
           setValue={setCapacity}
+          data={data}
        />
        <TouchableOpacity
                 style={{ backgroundColor: 'blue', width: 130, height: 50, marginTop: 30 }}
@@ -40,7 +50,7 @@ const NewBarrel = ({ route }) => {
                         margin: 8
                     }}
                 >Add Barrel</Text>
-            </TouchableOpacity>
+        </TouchableOpacity>
     </View>
   )
 }
