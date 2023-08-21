@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
@@ -10,11 +10,9 @@ const data = [
     { label: '4 liters', value: '5' }
 ];
 
-const DropdownComponent = () => {
-    const [value, setValue] = useState(null);
+const DropdownComponent = ({value, setValue}) => {
     const [isFocus, setIsFocus] = useState(false);
-
-
+    console.log(setValue)
 
     return (
         <View style={styles.container}>
@@ -25,7 +23,6 @@ const DropdownComponent = () => {
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
                 data={data}
-                search
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
