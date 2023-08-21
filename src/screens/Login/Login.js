@@ -15,6 +15,7 @@ const Login = () => {
                 style={styles.input}
                 placeholder='User email'
                 placeholderTextColor='white'
+                keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
             />
