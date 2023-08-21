@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
@@ -28,11 +28,6 @@ const Scan = () => {
         getBarrel(data)
     }
 
-
-    
-
-    const goBarrelScreen = () => navigation.navigate('NewBarrel', { code: texto })
-
     if (hasPermission === null)
         return (
             <View style={styles.container}>
@@ -52,15 +47,17 @@ const Scan = () => {
             try {
                 const {data} = await axios("https://barreltrackerback.onrender.com/api/barrel/getABarrel/"+ id);
                 if(data.barrelFound){
-                    if (data?.barrelFound?.statusBarrel === "delivered to customer") {
-                        setConfirmSale(true)
-                    }
-                    setBarrel(data.barrelFound)
+                    navigation.navigate('BarrelStatus', {data: data.barrelFound})
                 } else navigation.navigate('NewBarrel', { code: id })
             } catch (error) {
                 console.log(error)
             }
         }    
+
+        const scanAgain = () => {
+            setScanned(false)
+            setTexto("")
+        }
 
     return (
         <View style={styles.container}>
@@ -70,20 +67,7 @@ const Scan = () => {
                     style={{ height: 500, width: 500 }} />
             </View>
             <Text style={styles.mainText}>{texto}</Text>
-            {scanned && <Button title={'scan again'} onPress={() => setScanned(false)} color='tomato' />}
-
-
-            {/* <TouchableOpacity
-                style={{ backgroundColor: '#ABC' }}
-                onPress={() => navigation.navigate('NewBarrel')}>
-                <Text
-                    style={{
-                        color: '#000',
-                        fontSize: 40,
-                        margin: 10
-                    }}
-                >Go AddBarrel</Text>
-            </TouchableOpacity> */}
+            {scanned && <Button title={'scan again'} onPress={() => scanAgain()} color='#4950A1' />}
         </View>
     )
 
