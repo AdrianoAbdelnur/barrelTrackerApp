@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
-const data = [
-    { label: '50 liters', value: '50' },
-    { label: '30 liters', value: '30' },
-    { label: '20 liters', value: '20' },
-    { label: '10 liters', value: '10' },
-    { label: '4 liters', value: '5' }
-];
 
-const DropdownComponent = ({value, setValue}) => {
+
+const DropdownComponent = ({value, setValue, data}) => {
     const [isFocus, setIsFocus] = useState(false);
-    console.log(setValue)
 
     return (
         <View style={styles.container}>
