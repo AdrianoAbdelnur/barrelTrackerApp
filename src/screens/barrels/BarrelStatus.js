@@ -9,9 +9,13 @@ import axios from 'axios';
     const [beerStyle, setBeerStyle] = useState("")
     const [nextStatus, setNextStatus] = useState("")
     const [data, setData] = useState([])
-    
+    const [status, setStatus] = useState("")
+    const [newStatus, setNewStatus] = useState("")
+    const [price, setPrice] = useState(0)
+
     useEffect(() => {
       setBarrelData(route.params.data)
+      setStatus(route.params.data.statusBarrel)
     }, [])
 
     useEffect(() => {
@@ -29,14 +33,20 @@ import axios from 'axios';
 
   useEffect(() => {
     if(beerStyles){
-      setData(beerStyles?.map(s => (
+      setData(beerStyles?.map(style => (
         {
-          label: s.name,
-          value: s.name
+          label: style.name,
+          value: style._id
         }
       )))
     }
   }, [beerStyles])
+
+  useEffect(() => {
+    if (newStatus) {
+        handleBarrelStatus(newStatus)
+    }
+}, [newStatus])
   
 
   const nextstat = () => {
@@ -56,6 +66,25 @@ import axios from 'axios';
       const handleGetCustomers = () =>{
         
       }
+
+    const changeStatus = () => {
+      if (status === "empty in factory") {
+        setNewStatus({
+          statusBarrel: "full in factory",
+          style: beerStyle
+        })
+      }
+    }
+
+    const handleBarrelStatus = async(newStatus) =>{
+      try {
+        console.log(newStatus, barrelData.id)
+          const {data} = await axios.put("https://barreltrackerback.onrender.com/api/barrel/status/"+ barrelData.id, newStatus )
+          setBarrelData(data.upDatedBarrel)
+      } catch (error) {
+          console.log(error)
+      }
+}
   
   return (
     <View style={styles.container}>
@@ -63,7 +92,7 @@ import axios from 'axios';
       <Text style={styles.text}>Barrel id: <Text style={styles.data}>{barrelData.id}</Text></Text>
       <Text style={styles.text}>Capacity: <Text style={styles.data}>{barrelData.capacity}</Text></Text>
       <Text style={styles.text}>Status: <Text style={styles.data}>{barrelData.statusBarrel}</Text></Text>
-      {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style}</Text></Text> }
+      {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style?.name}</Text></Text> }
       {barrelData.statusBarrel === "delivered to customer" && <Text style={styles.text}>Customer: <Text style={styles.data}>{barrelData?.customer?.barName}</Text></Text>  }
       <DropdownComponent
         value={beerStyle}
@@ -72,12 +101,14 @@ import axios from 'axios';
       />
       <View style={styles.botton_container}>
         <TouchableOpacity
-          style={{ backgroundColor: 'blue', width: 350, height: 50, alignItems: 'center', justifyContent: 'center'}}
-          onPress={() => setAuth("hola fonola")}>
+          style={{ backgroundColor: 'blue', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15,}}
+          disabled={beerStyle.name? false:true}
+          onPress={() => changeStatus()}>
           <Text
               style={{
                 color: 'white',
                 fontSize: 22,
+                textAlign: 'center'
               }}
               >Change status to {nextStatus}</Text>
         </TouchableOpacity>
