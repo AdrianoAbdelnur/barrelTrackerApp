@@ -9,27 +9,22 @@ import axios from 'axios';
     const [info, setInfo] = useState("")
     const [nextStatus, setNextStatus] = useState("")
     const [data, setData] = useState([])
-    const [status, setStatus] = useState("")
     const [newStatus, setNewStatus] = useState("")
-    const [price, setPrice] = useState(0)
     const [customersData, setCustomersData] = useState([])
 
     useEffect(() => {
       setBarrelData(route.params.data)
-      setStatus(route.params.data.statusBarrel)
     }, [])
 
     useEffect(() => {
       nextstat();
-      if (barrelData.statusBarrel === "empty in factory" || barrelData.statusBarrel === "delivered to customer") {
+      if (barrelData.statusBarrel === "empty in factory") {
           handleGetStyles()
       }else if(barrelData.statusBarrel === "full in factory") {
           handleGetCustomers()
-          setPrice(barrelData.style.price)
       }else if(barrelData.statusBarrel === "delivered to customer"){
-          setPrice(barrelData.style.price)
+
       }
-      // eslint-disable-next-line
   }, [barrelData])
 
   useEffect(() => {
@@ -89,23 +84,27 @@ import axios from 'axios';
       }
 
     const changeStatus = () => {
-      if (status === "empty in factory") {
+      if (barrelData.statusBarrel === "empty in factory") {
         setNewStatus({
           statusBarrel: "full in factory",
           style: info
         })
       }
-      if (status === "full in factory") {
+      if (barrelData.statusBarrel === "full in factory") {
         setNewStatus({
           statusBarrel: "delivered to customer",
-          style: info
+          customer: info
+        })
+      }
+      if(barrelData.statusBarrel === "delivered to customer") {
+        setNewStatus({
+          statusBarrel: "empty in factory"
         })
       }
     }
 
     const handleBarrelStatus = async(newStatus) =>{
       try {
-        console.log(newStatus, barrelData.id)
           const {data} = await axios.put("https://barreltrackerback.onrender.com/api/barrel/status/"+ barrelData.id, newStatus )
           setBarrelData(data.upDatedBarrel)
       } catch (error) {
@@ -121,12 +120,15 @@ import axios from 'axios';
       <Text style={styles.text}>Status: <Text style={styles.data}>{barrelData.statusBarrel}</Text></Text>
       {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style?.name}</Text></Text> }
       {barrelData.statusBarrel === "delivered to customer" && <Text style={styles.text}>Customer: <Text style={styles.data}>{barrelData?.customer?.barName}</Text></Text>  }
-      <DropdownComponent
-        value={info}
-        setValue={setInfo}
-        data={data}
-        placeholder={barrelData.statusBarrel==='empty in factory'? "Select a style": "Select a customer"}
-      />
+      {
+        barrelData.statusBarrel !== "delivered to customer" &&
+          <DropdownComponent
+          value={info}
+          setValue={setInfo}
+          data={data}
+          placeholder={barrelData.statusBarrel==='empty in factory'? "Select a style": "Select a customer"}
+          />
+      }
       <View style={styles.botton_container}>
         <TouchableOpacity
           style={{ backgroundColor: 'blue', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15,}}
