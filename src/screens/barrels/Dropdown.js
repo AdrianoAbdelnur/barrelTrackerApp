@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 
 
-const DropdownComponent = ({value, setValue, data}) => {
+const DropdownComponent = ({value, setValue,placeholder , data}) => {
     const [isFocus, setIsFocus] = useState(false);
 
     return (
@@ -16,10 +16,11 @@ const DropdownComponent = ({value, setValue, data}) => {
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
                 data={data}
+                search
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder={!isFocus ? 'Select a capacity' : '...'}
+                placeholder={!isFocus ? placeholder : '...'}
                 searchPlaceholder="Search..."
                 value={value}
                 onFocus={() => setIsFocus(true)}
