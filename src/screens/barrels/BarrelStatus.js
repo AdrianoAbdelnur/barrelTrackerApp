@@ -6,12 +6,13 @@ import axios from 'axios';
   const BarrelStatus = ({ route }) => {
     const [barrelData, setBarrelData] = useState({})
     const [beerStyles, setBeerStyles] = useState("")
-    const [beerStyle, setBeerStyle] = useState("")
+    const [info, setInfo] = useState("")
     const [nextStatus, setNextStatus] = useState("")
     const [data, setData] = useState([])
     const [status, setStatus] = useState("")
     const [newStatus, setNewStatus] = useState("")
     const [price, setPrice] = useState(0)
+    const [customersData, setCustomersData] = useState([])
 
     useEffect(() => {
       setBarrelData(route.params.data)
@@ -43,6 +44,21 @@ import axios from 'axios';
   }, [beerStyles])
 
   useEffect(() => {
+    if (customersData) {
+        setData(
+          customersData?.map(customer => (
+            {
+              label: customer.barName,
+              value: customer._id
+            }
+          )
+          )
+        )
+    }
+  }, [customersData])
+  
+
+  useEffect(() => {
     if (newStatus) {
         handleBarrelStatus(newStatus)
     }
@@ -63,15 +79,26 @@ import axios from 'axios';
           console.log(error)
       }
     }  
-      const handleGetCustomers = () =>{
-        
+      const handleGetCustomers = async() =>{
+        try {
+          const {data} = await axios("https://barreltrackerback.onrender.com/api/client/getClients")
+          setCustomersData(data.clientsList)
+      } catch (error) {
+          console.log(error)
+      }
       }
 
     const changeStatus = () => {
       if (status === "empty in factory") {
         setNewStatus({
           statusBarrel: "full in factory",
-          style: beerStyle
+          style: info
+        })
+      }
+      if (status === "full in factory") {
+        setNewStatus({
+          statusBarrel: "delivered to customer",
+          style: info
         })
       }
     }
@@ -95,14 +122,15 @@ import axios from 'axios';
       {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style?.name}</Text></Text> }
       {barrelData.statusBarrel === "delivered to customer" && <Text style={styles.text}>Customer: <Text style={styles.data}>{barrelData?.customer?.barName}</Text></Text>  }
       <DropdownComponent
-        value={beerStyle}
-        setValue={setBeerStyle}
+        value={info}
+        setValue={setInfo}
         data={data}
+        placeholder={barrelData.statusBarrel==='empty in factory'? "Select a style": "Select a customer"}
       />
       <View style={styles.botton_container}>
         <TouchableOpacity
           style={{ backgroundColor: 'blue', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15,}}
-          disabled={beerStyle.name? false:true}
+          disabled={info? false:true}
           onPress={() => changeStatus()}>
           <Text
               style={{
