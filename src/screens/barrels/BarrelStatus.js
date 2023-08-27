@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, BackHandler } from 'react-nat
 import React, { useEffect, useState } from 'react'
 import DropdownComponent from './Dropdown';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, validatePathConfig } from '@react-navigation/native';
 
 const BarrelStatus = ({ route }) => {
   const [barrelData, setBarrelData] = useState({})
@@ -109,6 +109,7 @@ const BarrelStatus = ({ route }) => {
         statusBarrel: "full in factory",
         style: info
       })
+      setInfo('')
     }
     if (barrelData.statusBarrel === "full in factory") {
       setNewStatus({
@@ -117,9 +118,11 @@ const BarrelStatus = ({ route }) => {
       })
     }
     if (barrelData.statusBarrel === "delivered to customer") {
+
       setNewStatus({
         statusBarrel: "empty in factory"
       })
+      setInfo('')
     }
   }
 
@@ -229,8 +232,8 @@ const BarrelStatus = ({ route }) => {
       }
       <View style={styles.botton_container}>
         <TouchableOpacity
-          style={{ backgroundColor: 'blue', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15, }}
-          disabled={info ? false : true}
+          style={{ backgroundColor: info || barrelData.statusBarrel === "delivered to customer"? "#4950A1" : 'grey', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15, }}
+          disabled={info || barrelData.statusBarrel === "delivered to customer" ? false : true}
           onPress={() => changeStatus()}>
           <Text
             style={{
