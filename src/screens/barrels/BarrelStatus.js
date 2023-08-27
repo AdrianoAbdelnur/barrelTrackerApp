@@ -188,7 +188,17 @@ import { useNavigation } from '@react-navigation/native';
                     paidComplete: true
                 }
                 paid= 0
+                updateSale(saleId, payload)
+                updatePay(pay._id, {assigned: true})
             }
+    }
+  }
+
+  const updateSale = async(id, paylodad) => {
+    try {
+        await axios.put("https://barreltrackerback.onrender.com/api/sale/updatePay/"+id, paylodad)
+    } catch (error) {
+        console.log(error)
     }
 }
 
