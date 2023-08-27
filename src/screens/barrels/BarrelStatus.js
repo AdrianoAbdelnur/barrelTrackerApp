@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import DropdownComponent from './Dropdown';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
   const BarrelStatus = ({ route }) => {
     const [barrelData, setBarrelData] = useState({})
@@ -11,11 +12,23 @@ import axios from 'axios';
     const [data, setData] = useState([])
     const [newStatus, setNewStatus] = useState("")
     const [customersData, setCustomersData] = useState([])
+    const navigation = useNavigation();
 
+    
     useEffect(() => {
       setBarrelData(route.params.data)
-    }, [])
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+  
+      return () => {
+        backHandler.remove();
+      };
+    }, []);
 
+    const handleBackPress = () => {
+      navigation.navigate('Home');
+      return true;
+    };
+ 
     useEffect(() => {
       nextstat();
       if (barrelData.statusBarrel === "empty in factory") {
