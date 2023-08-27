@@ -7,6 +7,7 @@ import { View, ActivityIndicator, StyleSheet, ImageBackground} from 'react-nativ
 import useAuth from '../hooks/useAuth';
 import NewBarrel from '../screens/barrels/NewBarrel';
 import BarrelStatus from '../screens/barrels/BarrelStatus';
+import CustomersInfo from '../screens/customersInformation/CustomersInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +39,8 @@ const AuthStack = () => {
                     },
                 }} />
                 <Stack.Screen name="NewBarrel" component={NewBarrel} options={{ title: 'New Barrel', headerBackVisible: false }}/>
-                <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'BarrelStatus' , headerBackVisible: false}} />
+                <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'Barrel Status' , headerBackVisible: false}} />
+                <Stack.Screen name="CustomersInfo" component={CustomersInfo} options={{ title: 'Customers Information' , headerBackVisible: false}} />
             </Stack.Navigator>
         )
     }
