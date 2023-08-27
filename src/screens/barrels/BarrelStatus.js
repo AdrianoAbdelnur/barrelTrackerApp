@@ -151,14 +151,46 @@ import { useNavigation } from '@react-navigation/native';
     try {
         const {data} = await axios("https://barreltrackerback.onrender.com/api/pay/getPaysNotAssigned/" + barrelData.customer._id)  
         if(data.paysList.length) {
-          /* paysOperation(data.paysList); */
+          paysOperation(data.paysList);
         }
         } catch (error) {
         console.log(error)
     }
   }
 
-  
+  const paysOperation = (pays)=> {
+    let salePaid = 0
+    for (const pay of pays) {
+        let paid = 0
+        if (pay.noAssignedPay > 0) {
+                paid = pay.noAssignedPay;
+            } else  {
+                paid = pay.pay;
+            }    
+            if (paid > (barrelData.style.price * barrelData.capacity)) {
+                const payload = {
+                    paid: price * barrelData.capacity,
+                    paidComplete: true
+                }
+                updateSale(saleId, payload)
+                paid = paid - barrelData.style.price * barrelData.capacity
+                updatePay(pay._id, {noAssignedPay: paid})
+            } else if (paid < barrelData.style.price * barrelData.capacity) {    
+                const payload= {
+                    paid: paid + salePaid
+                }
+                salePaid = salePaid + paid
+                updateSale(saleId, payload)
+                updatePay(pay._id, {assigned: true})
+            } else if (paid === (barrelData.style.price * barrelData.capacity)) {
+                const payload= {
+                    paid: barrelData.style.price * barrelData.capacity,
+                    paidComplete: true
+                }
+                paid= 0
+            }
+    }
+}
 
 
   
