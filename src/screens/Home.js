@@ -22,7 +22,7 @@ const Home = () => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
-                onPress={() => setAuth("hola fonola")}>
+                onPress={() => navigation.navigate('CustomersInfo')}>
                 <Text
                     style={{
                         color: 'white',
