@@ -160,6 +160,7 @@ import { useNavigation } from '@react-navigation/native';
 
   const paysOperation = (pays)=> {
     let salePaid = 0
+    console.log(pays)
     for (const pay of pays) {
         let paid = 0
         if (pay.noAssignedPay > 0) {
@@ -169,13 +170,14 @@ import { useNavigation } from '@react-navigation/native';
             }    
             if (paid > (barrelData.style.price * barrelData.capacity)) {
                 const payload = {
-                    paid: price * barrelData.capacity,
+                    paid: barrelData.style.price * barrelData.capacity,
                     paidComplete: true
                 }
                 updateSale(saleId, payload)
                 paid = paid - barrelData.style.price * barrelData.capacity
                 updatePay(pay._id, {noAssignedPay: paid})
-            } else if (paid < barrelData.style.price * barrelData.capacity) {    
+            } else if (paid < barrelData.style.price * barrelData.capacity) {
+              console.log(paid)    
                 const payload= {
                     paid: paid + salePaid
                 }
@@ -194,9 +196,10 @@ import { useNavigation } from '@react-navigation/native';
     }
   }
 
-  const updateSale = async(id, paylodad) => {
+  const updateSale = async(id, payload) => {
     try {
-        await axios.put("https://barreltrackerback.onrender.com/api/sale/updatePay/"+id, paylodad)
+      console.log(payload)
+        await axios.put("https://barreltrackerback.onrender.com/api/sale/updatePay/"+id, payload)
     } catch (error) {
         console.log(error)
     }
