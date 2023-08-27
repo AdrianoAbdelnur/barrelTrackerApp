@@ -1,8 +1,24 @@
-import { View, Text, ActivityIndicator, StyleSheet, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, ActivityIndicator, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const CustomersInfo = () => {
-    const [customersData, setcustomersData] = useState("")
+    const [customersData, setCustomersData] = useState("")
+
+    useEffect(() => {
+        handleGetClient()
+    }, [])
+    
+
+    const handleGetClient = async() =>{
+        try {
+            const {data} = await axios("https://barreltrackerback.onrender.com/api/client/getClients")
+            setCustomersData(data.clientsList)
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
     if (!customersData) {
         return (
@@ -15,7 +31,21 @@ const CustomersInfo = () => {
 
         return (
             <View>
-                <Text>CustomersInfo</Text>
+                <ScrollView>
+                    {
+                        customersData.map(customer => {
+                            return(
+                                <View>
+                                    <Text style={styles.title}>{customer.barName}</Text>
+                                    <Text style={styles.info}>location: {customer.location}</Text>
+                                    <Text style={styles.info}>Manager: {customer.barManager}</Text>
+                                    <Text style={styles.info}>email: {customer.email}</Text>
+                                </View>
+                            )
+                        })
+
+                    }
+                </ScrollView>
             </View>
         )
     }
@@ -34,6 +64,15 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 10,
+    },
+    info: {
+        fontSize: 16,
+        marginLeft: 20,
     }
 });
 
