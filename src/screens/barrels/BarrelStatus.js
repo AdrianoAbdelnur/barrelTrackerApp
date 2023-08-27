@@ -72,13 +72,12 @@ import { useNavigation } from '@react-navigation/native';
         handleBarrelStatus(newStatus)
     }
   }, [newStatus])
-
+  
   useEffect(() => {
     if(saleId) {
       handleGetPaysNotAssigned()
     }
   }, [saleId])
-  
   
 
   const nextstat = () => {
@@ -147,6 +146,21 @@ import { useNavigation } from '@react-navigation/native';
           console.log(error)
       }
   }
+
+  const handleGetPaysNotAssigned = async() => {
+    try {
+        const {data} = await axios("https://barreltrackerback.onrender.com/api/pay/getPaysNotAssigned/" + barrelData.customer._id)  
+        if(data.paysList.length) {
+          /* paysOperation(data.paysList); */
+        }
+        } catch (error) {
+        console.log(error)
+    }
+  }
+
+  
+
+
   
   return (
     <View style={styles.container}>
