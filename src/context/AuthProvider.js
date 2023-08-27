@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
 
   const getAuth = async(auth) => {
     try {
-        console.log(auth)
         const { data } = await axios.get('https://barreltrackerback.onrender.com/api/user/status', 
         {headers: {
             'Content-Type': 'application/json',
