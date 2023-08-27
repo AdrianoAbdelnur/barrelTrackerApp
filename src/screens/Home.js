@@ -15,10 +15,10 @@ const Home = () => {
                 <Text
                     style={{
                         color: 'white',
-                        fontSize: 40,
+                        fontSize: 25,
                         margin: 10
                     }}
-                >Add a client</Text>
+                >Scan a QR code</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
@@ -26,10 +26,10 @@ const Home = () => {
                 <Text
                     style={{
                         color: 'white',
-                        fontSize: 40,
+                        fontSize: 25,
                         margin: 10
                     }}
-                >SET AUTH</Text>
+                >Customers Information</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}

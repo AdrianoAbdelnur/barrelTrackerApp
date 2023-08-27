@@ -3,7 +3,7 @@ import Home from '../screens/Home';
 import Login from '../screens/Login/Login';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet, ImageBackground, Button } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, ImageBackground} from 'react-native'
 import useAuth from '../hooks/useAuth';
 import NewBarrel from '../screens/barrels/NewBarrel';
 import BarrelStatus from '../screens/barrels/BarrelStatus';
@@ -12,9 +12,6 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
     const { auth, isLoading } = useAuth();
-
-
-
 
     if (isLoading) {
         return (
@@ -26,10 +23,10 @@ const AuthStack = () => {
         )
     }
 
-
     if (auth?.role === 'delivery' || auth?.role === 'admin') {
         return (
             <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
                 <Stack.Screen name="Scan" component={Scan} options={{
                     title: 'Scan',
                     headerStyle: {
@@ -41,11 +38,9 @@ const AuthStack = () => {
                     },
                 }} />
                 <Stack.Screen name="NewBarrel" component={NewBarrel} options={{ title: 'New Barrel', headerBackVisible: false }}/>
-                <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
                 <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'BarrelStatus' , headerBackVisible: false}} />
             </Stack.Navigator>
         )
-
     }
 
     if (!auth?.isLogged) {
