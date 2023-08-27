@@ -43,21 +43,21 @@ const Scan = () => {
             </View>
         )
 
-        const getBarrel = async(id) => {
-            try {
-                const {data} = await axios("https://barreltrackerback.onrender.com/api/barrel/getABarrel/"+ id);
-                if(data.barrelFound){
-                    navigation.navigate('BarrelStatus', {data: data.barrelFound})
-                } else navigation.navigate('NewBarrel', { code: id })
-            } catch (error) {
-                navigation.navigate('Home')
-            }
-        }    
-
-        const scanAgain = () => {
-            setScanned(false)
-            setTexto("")
+    const getBarrel = async (id) => {
+        try {
+            const { data } = await axios("https://barreltrackerback.onrender.com/api/barrel/getABarrel/" + id);
+            if (data.barrelFound) {
+                navigation.navigate('BarrelStatus', { data: data.barrelFound })
+            } else navigation.navigate('NewBarrel', { code: id })
+        } catch (error) {
+            navigation.navigate('Home')
         }
+    }
+
+    const scanAgain = () => {
+        setScanned(false)
+        setTexto("")
+    }
 
     return (
         <View style={styles.container}>
