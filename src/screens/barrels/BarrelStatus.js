@@ -200,9 +200,15 @@ import { useNavigation } from '@react-navigation/native';
     } catch (error) {
         console.log(error)
     }
+  }
+
+  const updatePay = async (id, payload) => {
+    try {
+        await axios.put("https://barreltrackerback.onrender.com/api/pay/updatePay/" + id, payload)
+    } catch (error) {
+        console.log(error)
+    }
 }
-
-
   
   return (
     <View style={styles.container}>
