@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
     const [newStatus, setNewStatus] = useState("")
     const [customersData, setCustomersData] = useState([])
     const navigation = useNavigation();
+    const [saleId, setSaleId] = useState()
 
     
     useEffect(() => {
@@ -36,7 +37,7 @@ import { useNavigation } from '@react-navigation/native';
       }else if(barrelData.statusBarrel === "full in factory") {
           handleGetCustomers()
       }else if(barrelData.statusBarrel === "delivered to customer"){
-
+        handleNewSale()
       }
   }, [barrelData])
 
@@ -70,7 +71,13 @@ import { useNavigation } from '@react-navigation/native';
     if (newStatus) {
         handleBarrelStatus(newStatus)
     }
-}, [newStatus])
+  }, [newStatus])
+  
+  useEffect(() => {
+    if(saleId) {
+      handleGetPaysNotAssigned()
+    }
+  }, [saleId])
   
 
   const nextstat = () => {
@@ -123,6 +130,87 @@ import { useNavigation } from '@react-navigation/native';
       } catch (error) {
           console.log(error)
       }
+    }
+
+    const handleNewSale = async() => {
+      try {
+          const paylodad = {
+              style: barrelData.style._id,
+              volume: barrelData.capacity,
+              price: barrelData.style.price * barrelData.capacity,
+              customer: barrelData.customer._id
+          }
+          const {data} = await axios.post("https://barreltrackerback.onrender.com/api/sale/newSale", paylodad)
+          setSaleId(data.newSale._id)
+        } catch (error) {
+          console.log(error)
+      }
+  }
+
+  const handleGetPaysNotAssigned = async() => {
+    try {
+        const {data} = await axios("https://barreltrackerback.onrender.com/api/pay/getPaysNotAssigned/" + barrelData.customer._id)  
+        if(data.paysList.length) {
+          paysOperation(data.paysList);
+        }
+        } catch (error) {
+        console.log(error)
+    }
+  }
+
+  const paysOperation = (pays)=> {
+    let salePaid = 0
+    console.log(pays)
+    for (const pay of pays) {
+        let paid = 0
+        if (pay.noAssignedPay > 0) {
+                paid = pay.noAssignedPay;
+            } else  {
+                paid = pay.pay;
+            }    
+            if (paid > (barrelData.style.price * barrelData.capacity)) {
+                const payload = {
+                    paid: barrelData.style.price * barrelData.capacity,
+                    paidComplete: true
+                }
+                updateSale(saleId, payload)
+                paid = paid - barrelData.style.price * barrelData.capacity
+                updatePay(pay._id, {noAssignedPay: paid})
+            } else if (paid < barrelData.style.price * barrelData.capacity) {
+              console.log(paid)    
+                const payload= {
+                    paid: paid + salePaid
+                }
+                salePaid = salePaid + paid
+                updateSale(saleId, payload)
+                updatePay(pay._id, {assigned: true})
+            } else if (paid === (barrelData.style.price * barrelData.capacity)) {
+                const payload= {
+                    paid: barrelData.style.price * barrelData.capacity,
+                    paidComplete: true
+                }
+                paid= 0
+                updateSale(saleId, payload)
+                updatePay(pay._id, {assigned: true})
+            }
+    }
+  }
+
+  const updateSale = async(id, payload) => {
+    try {
+      console.log(payload)
+        await axios.put("https://barreltrackerback.onrender.com/api/sale/updatePay/"+id, payload)
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  const updatePay = async (id, payload) => {
+    try {
+        await axios.put("https://barreltrackerback.onrender.com/api/pay/updatePay/" + id, payload)
+    } catch (error) {
+        console.log(error)
+    }
 }
   
   return (
