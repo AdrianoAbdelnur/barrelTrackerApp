@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import DropdownComponent from './Dropdown';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native"
@@ -17,6 +17,18 @@ const NewBarrel = ({ route }) => {
       { label: '4 liters', value: '5' }
   ];
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
+
+  const handleBackPress = () => {
+    navigation.navigate('Home');
+    return true;
+  };
 
 
     const handleAddNewBarrel = async() => {
