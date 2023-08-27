@@ -46,7 +46,6 @@ const Scan = () => {
         const getBarrel = async(id) => {
             try {
                 const {data} = await axios("https://barreltrackerback.onrender.com/api/barrel/getABarrel/"+ id);
-                console.log(data.barrelFound)
                 if(data.barrelFound){
                     navigation.navigate('BarrelStatus', {data: data.barrelFound})
                 } else navigation.navigate('NewBarrel', { code: id })
