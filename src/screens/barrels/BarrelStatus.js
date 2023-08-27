@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
     const [newStatus, setNewStatus] = useState("")
     const [customersData, setCustomersData] = useState([])
     const navigation = useNavigation();
+    const [saleId, setSaleId] = useState()
 
     
     useEffect(() => {
@@ -36,7 +37,7 @@ import { useNavigation } from '@react-navigation/native';
       }else if(barrelData.statusBarrel === "full in factory") {
           handleGetCustomers()
       }else if(barrelData.statusBarrel === "delivered to customer"){
-
+        handleNewSale()
       }
   }, [barrelData])
 
@@ -70,7 +71,14 @@ import { useNavigation } from '@react-navigation/native';
     if (newStatus) {
         handleBarrelStatus(newStatus)
     }
-}, [newStatus])
+  }, [newStatus])
+
+  useEffect(() => {
+    if(saleId) {
+      handleGetPaysNotAssigned()
+    }
+  }, [saleId])
+  
   
 
   const nextstat = () => {
@@ -123,7 +131,22 @@ import { useNavigation } from '@react-navigation/native';
       } catch (error) {
           console.log(error)
       }
-}
+    }
+
+    const handleNewSale = async() => {
+      try {
+          const paylodad = {
+              style: barrelData.style._id,
+              volume: barrelData.capacity,
+              price: barrelData.style.price * barrelData.capacity,
+              customer: barrelData.customer._id
+          }
+          const {data} = await axios.post("https://barreltrackerback.onrender.com/api/sale/newSale", paylodad)
+          setSaleId(data.newSale._id)
+        } catch (error) {
+          console.log(error)
+      }
+  }
   
   return (
     <View style={styles.container}>
