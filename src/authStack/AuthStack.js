@@ -3,7 +3,7 @@ import Home from '../screens/Home';
 import Login from '../screens/Login/Login';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet, ImageBackground} from 'react-native'
+import { View, ActivityIndicator, StyleSheet, ImageBackground } from 'react-native'
 import useAuth from '../hooks/useAuth';
 import NewBarrel from '../screens/barrels/NewBarrel';
 import BarrelStatus from '../screens/barrels/BarrelStatus';
@@ -28,37 +28,50 @@ const AuthStack = () => {
         return (
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-                <Stack.Screen name="Scan" component={Scan} options={{
-                    title: 'Scan',
-                    headerStyle: {
-                        backgroundColor: '#34495e',
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    },
-                }} />
-                <Stack.Screen name="NewBarrel" component={NewBarrel} options={{ title: 'New Barrel', headerStyle: {
-                        backgroundColor: '#34495e',
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }, headerBackVisible: false }}/>
-                <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'Barrel Status' , headerStyle: {
-                        backgroundColor: '#34495e',
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }, headerBackVisible: false}} />
-                <Stack.Screen name="CustomersInfo" component={CustomersInfo} options={{ title: 'Customers Information', headerStyle: {
-                        backgroundColor: '#34495e',
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }, headerBackVisible: false}} />
+                <Stack.Screen name="Scan" component={Scan}
+                    options={{
+                        title: 'Scan',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }} />
+                <Stack.Screen name="NewBarrel" component={NewBarrel}
+                    options={{
+                        title: 'New Barrel',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="BarrelStatus" component={BarrelStatus}
+                    options={{
+                        title: 'Barrel Status',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="CustomersInfo" component={CustomersInfo}
+                    options={{
+                        title: 'Customers Information',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
             </Stack.Navigator>
         )
     }
@@ -71,7 +84,7 @@ const AuthStack = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'red',
+        backgroundColor: 'gray',
         width: '100vw',
         flex: 1,
         justifyContent: 'center',
