@@ -14,7 +14,6 @@ const CustomersInfo = () => {
         try {
             const {data} = await axios("https://barreltrackerback.onrender.com/api/client/getClients")
             setCustomersData(data.clientsList)
-            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -31,21 +30,23 @@ const CustomersInfo = () => {
 
         return (
             <View>
-                <ScrollView>
-                    {
-                        customersData.map(customer => {
-                            return(
-                                <View>
-                                    <Text style={styles.title}>{customer.barName}</Text>
-                                    <Text style={styles.info}>location: {customer.location}</Text>
-                                    <Text style={styles.info}>Manager: {customer.barManager}</Text>
-                                    <Text style={styles.info}>email: {customer.email}</Text>
-                                </View>
-                            )
-                        })
-
-                    }
-                </ScrollView>
+                <ImageBackground source={require('./../../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
+                    <ScrollView>
+                        {
+                            customersData.map(customer => {
+                                return(
+                                    <View key={customer.barName} style={styles.infoBlock}>
+                                            <Text style={styles.title}>{customer.barName}</Text>
+                                            <Text style={styles.info}>location: {customer.location}</Text>
+                                            <Text style={styles.info}>Manager: {customer.barManager}</Text>
+                                            <Text style={styles.info}>email: {customer.email}</Text>
+                                    </View>
+                                )
+                            })
+                            
+                        }
+                    </ScrollView>
+                </ImageBackground>
             </View>
         )
     }
@@ -73,6 +74,16 @@ const styles = StyleSheet.create({
     info: {
         fontSize: 16,
         marginLeft: 20,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+    infoBlock: {
+        marginTop: 22,
+        marginHorizontal: 18,
+        backgroundColor: 'rgba(128, 128, 128, 0.35)',
+        borderRadius: 15
     }
 });
 

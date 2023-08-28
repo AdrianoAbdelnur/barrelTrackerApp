@@ -46,7 +46,7 @@ const Login = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'blue',
+        backgroundColor: '#34495e',
         width: '100vw',
         flex: 1,
         justifyContent: 'center',
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 20,
     },
     input: {
         width: '90%',

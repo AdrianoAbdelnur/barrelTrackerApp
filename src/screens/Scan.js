@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, ImageBackground } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
@@ -61,13 +61,16 @@ const Scan = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.barCodeBox}>
-                <BarCodeScanner
-                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={{ height: 500, width: 500 }} />
-            </View>
-            <Text style={styles.mainText}>{texto}</Text>
-            {scanned && <Button title={'scan again'} onPress={() => scanAgain()} color='#4950A1' />}
+            <ImageBackground source={require('./../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
+                <Text style={styles.title}>Scan the QR code</Text>
+                <View style={styles.barCodeBox}>
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={{ height: 550, width: 500 }} />
+                </View>
+                <Text style={styles.mainText}>{texto}</Text>
+                {scanned && <Button title={'scan again'} onPress={() => scanAgain()} color='#4950A1' />}
+            </ImageBackground>
         </View>
     )
 
@@ -85,8 +88,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 300,
-        width: 300,
+        height: 310,
+        width: 310,
         overflow: 'hidden',
         borderRadius: 30,
     },
@@ -94,6 +97,18 @@ const styles = StyleSheet.create({
         fontSize: 40,
         marginTop: "20%",
         marginLeft: "10%"
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    title: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 20
     }
 });
 
