@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, BackHandler, ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import DropdownComponent from './Dropdown';
 import axios from 'axios';
@@ -215,46 +215,45 @@ const BarrelStatus = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Barrel Status </Text>
-      <Text style={styles.text}>Barrel id: <Text style={styles.data}>{barrelData.id}</Text></Text>
-      <Text style={styles.text}>Capacity: <Text style={styles.data}>{barrelData.capacity}</Text></Text>
-      <Text style={styles.text}>Status: <Text style={styles.data}>{barrelData.statusBarrel}</Text></Text>
-      {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style?.name}</Text></Text>}
-      {barrelData.statusBarrel === "delivered to customer" && <Text style={styles.text}>Customer: <Text style={styles.data}>{barrelData?.customer?.barName}</Text></Text>}
-      {
-        barrelData.statusBarrel !== "delivered to customer" &&
-        <DropdownComponent
+      <ImageBackground source={require('./../../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
+        <Text style={styles.text}>Barrel id: <Text style={styles.data}>{barrelData.id}</Text></Text>
+        <Text style={styles.text}>Capacity: <Text style={styles.data}>{barrelData.capacity}</Text></Text>
+        <Text style={styles.text}>Status: <Text style={styles.data}>{barrelData.statusBarrel}</Text></Text>
+        {barrelData.statusBarrel !== "empty in factory" && <Text style={styles.text}>Style: <Text style={styles.data}>{barrelData?.style?.name}</Text></Text>}
+        {barrelData.statusBarrel === "delivered to customer" && <Text style={styles.text}>Customer: <Text style={styles.data}>{barrelData?.customer?.barName}</Text></Text>}
+        {
+          barrelData.statusBarrel !== "delivered to customer" &&
+          <DropdownComponent
           value={info}
           setValue={setInfo}
           data={data}
           placeholder={barrelData.statusBarrel === 'empty in factory' ? "Select a style" : "Select a customer"}
-        />
-      }
-      <View style={styles.botton_container}>
-        <TouchableOpacity
-          style={{ backgroundColor: info || barrelData.statusBarrel === "delivered to customer"? "#4950A1" : 'grey', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15, }}
-          disabled={info || barrelData.statusBarrel === "delivered to customer" ? false : true}
-          onPress={() => changeStatus()}>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 22,
-              textAlign: 'center'
-            }}
-          >Change status to {nextStatus}</Text>
-        </TouchableOpacity>
-      </View>
+          />
+        }
+        <View style={styles.botton_container}>
+          <TouchableOpacity
+            style={{ backgroundColor: info || barrelData.statusBarrel === "delivered to customer"? "#34495e" : 'grey', width: 350, height: 70, alignItems: 'center', justifyContent: 'center', borderRadius: 15, }}
+            disabled={info || barrelData.statusBarrel === "delivered to customer" ? false : true}
+            onPress={() => changeStatus()}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 22,
+                textAlign: 'center'
+              }}
+              >Change status to {nextStatus}</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: "6%",
-    marginLeft: "6%",
-  },
   text: {
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 15,
+    marginTop: 10
   },
   data: {
     fontWeight: 'bold'
@@ -262,8 +261,12 @@ const styles = StyleSheet.create({
   botton_container: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: 30,
+    marginTop: 22,
     with: '100%'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   }
 })
 

@@ -1,50 +1,61 @@
-import { Text, TouchableOpacity, View } from "react-native"
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import useAuth from "../hooks/useAuth";
 
 const Home = () => {
     const navigation = useNavigation();
-    const { setAuth, logout } = useAuth();
-
 
     return (
-        <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'space-around', flexDirection: "row", flexWrap: "wrap" }}>
+        <View style={styles.container}>
             <TouchableOpacity
-                style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
+                style={styles.OptionsButton}
                 onPress={() => navigation.navigate('Scan')}>
+                <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
                 <Text
-                    style={{
-                        color: 'white',
-                        fontSize: 25,
-                        margin: 10
-                    }}
-                >Scan a QR code</Text>
+                    style={styles.buttonText}
+                    >Scan a QR code</Text>
+                </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity
-                style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
+                style={styles.OptionsButton}
                 onPress={() => navigation.navigate('CustomersInfo')}>
-                <Text
-                    style={{
-                        color: 'white',
-                        fontSize: 25,
-                        margin: 10
-                    }}
-                >Customers Information</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={{ backgroundColor: 'blue', width: 150, height: 150, marginTop: 30 }}
-                onPress={() => logout()}>
-                <Text
-                    style={{
-                        color: 'white',
-                        fontSize: 40,
-                        margin: 10
-                    }}
-                >UNSET AUTH</Text>
+                <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
+                    <Text
+                        style={styles.buttonText}
+                        >Customers Information</Text>
+                </ImageBackground>
             </TouchableOpacity>
         </View>
 
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#34495e',
+        flex: 1, alignItems: 'flex-start', 
+        justifyContent: 'space-around', 
+        flexDirection: "row", 
+        flexWrap: "wrap"
+    },
+    OptionsButton: {
+        width: 350,
+        height: 75,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20,
+    },
+    buttonText: {
+        color: 'black',
+        fontSize: 25,
+        margin: 10
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+    }
+});
+
 
 export default Home

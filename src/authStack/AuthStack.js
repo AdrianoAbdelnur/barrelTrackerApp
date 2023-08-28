@@ -31,16 +31,34 @@ const AuthStack = () => {
                 <Stack.Screen name="Scan" component={Scan} options={{
                     title: 'Scan',
                     headerStyle: {
-                        backgroundColor: '#4950A1',
+                        backgroundColor: '#34495e',
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
                         fontWeight: 'bold',
                     },
                 }} />
-                <Stack.Screen name="NewBarrel" component={NewBarrel} options={{ title: 'New Barrel', headerBackVisible: false }}/>
-                <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'Barrel Status' , headerBackVisible: false}} />
-                <Stack.Screen name="CustomersInfo" component={CustomersInfo} options={{ title: 'Customers Information' , headerBackVisible: false}} />
+                <Stack.Screen name="NewBarrel" component={NewBarrel} options={{ title: 'New Barrel', headerStyle: {
+                        backgroundColor: '#34495e',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }, headerBackVisible: false }}/>
+                <Stack.Screen name="BarrelStatus" component={BarrelStatus} options={{ title: 'Barrel Status' , headerStyle: {
+                        backgroundColor: '#34495e',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }, headerBackVisible: false}} />
+                <Stack.Screen name="CustomersInfo" component={CustomersInfo} options={{ title: 'Customers Information', headerStyle: {
+                        backgroundColor: '#34495e',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }, headerBackVisible: false}} />
             </Stack.Navigator>
         )
     }
