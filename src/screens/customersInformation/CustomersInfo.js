@@ -8,25 +8,25 @@ const CustomersInfo = () => {
     useEffect(() => {
         handleGetClient()
     }, [])
-    
 
-    const handleGetClient = async() =>{
+
+    const handleGetClient = async () => {
         try {
-            const {data} = await axios("https://barreltrackerback.onrender.com/api/client/getClients")
+            const { data } = await axios("https://barreltrackerback.onrender.com/api/client/getClients")
             setCustomersData(data.clientsList)
         } catch (error) {
             console.log(error)
         }
     }
-    
+
     if (!customersData) {
         return (
             <View style={styles.container}>
-                    <ActivityIndicator size={'large'} />   
+                <ActivityIndicator size={'large'} />
             </View>
         )
     }
-    if(customersData) {
+    if (customersData) {
 
         return (
             <View>
@@ -34,16 +34,16 @@ const CustomersInfo = () => {
                     <ScrollView>
                         {
                             customersData.map(customer => {
-                                return(
+                                return (
                                     <View key={customer.barName} style={styles.infoBlock}>
-                                            <Text style={styles.title}>{customer.barName}</Text>
-                                            <Text style={styles.info}>location: {customer.location}</Text>
-                                            <Text style={styles.info}>Manager: {customer.barManager}</Text>
-                                            <Text style={styles.info}>email: {customer.email}</Text>
+                                        <Text style={styles.title}>{customer.barName}</Text>
+                                        <Text style={styles.info}>location: {customer.location}</Text>
+                                        <Text style={styles.info}>Manager: {customer.barManager}</Text>
+                                        <Text style={styles.info}>email: {customer.email}</Text>
                                     </View>
                                 )
                             })
-                            
+
                         }
                     </ScrollView>
                 </ImageBackground>

@@ -10,7 +10,7 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
-            <ImageBackground source={require('./../../../assets/images/pirate.jpg')} resizeMode="cover" style={styles.image}>
+            <ImageBackground source={require('./../../../assets/images/descarga.jpg')} resizeMode="cover" style={styles.image}>
                 <TextInput
                     style={styles.input}
                     placeholder='User email'
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     loginButton: {
-        backgroundColor: '#4950A1',
+        backgroundColor: '#34495e',
         width: 300,
         height: 75,
         borderRadius: 15,
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 15,
         paddingHorizontal: 20,
-        backgroundColor: 'grey',
+        backgroundColor: '#3c3c3c',
         color: 'white',
         fontSize: 25
     },
     image: {
         width: '100%',
         height: '100%',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center'
     }
 });
