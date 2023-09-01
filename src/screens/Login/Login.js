@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert, Image } from 'react-native'
 import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth';
 
@@ -11,6 +11,7 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <ImageBackground source={require('./../../../assets/images/descarga.jpg')} resizeMode="cover" style={styles.image}>
+                <Image source={require('./../../../assets/icon.png')} style={styles.iconImage}/>
                 <TextInput
                     style={styles.input}
                     placeholder='User email'
@@ -77,6 +78,11 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    iconImage: {
+        width: 150,
+        height: 150,
+        marginBottom: 40
     }
 });
 
