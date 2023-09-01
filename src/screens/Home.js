@@ -6,24 +6,26 @@ const Home = () => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                style={styles.OptionsButton}
-                onPress={() => navigation.navigate('Scan')}>
-                <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
-                <Text
-                    style={styles.buttonText}
-                    >Scan a QR code</Text>
-                </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.OptionsButton}
-                onPress={() => navigation.navigate('CustomersInfo')}>
-                <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
+            <View style={styles.buttons_container}>
+                <TouchableOpacity
+                    style={styles.OptionsButton}
+                    onPress={() => navigation.navigate('Scan')}>
+                    <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
                     <Text
                         style={styles.buttonText}
-                        >Customers Information</Text>
-                </ImageBackground>
-            </TouchableOpacity>
+                        >Scan a QR code</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.OptionsButton}
+                    onPress={() => navigation.navigate('CustomersInfo')}>
+                    <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
+                        <Text
+                            style={styles.buttonText}
+                            >Customers Information</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+            </View>
         </View>
 
     )
@@ -32,10 +34,14 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#34495e',
-        flex: 1, alignItems: 'flex-start', 
-        justifyContent: 'space-around', 
-        flexDirection: "row", 
-        flexWrap: "wrap"
+        flex: 1,  
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    buttons_container:{
+        height: "60%",
+        flexDirection: "column",
+        justifyContent: 'space-around'
     },
     OptionsButton: {
         width: 350,

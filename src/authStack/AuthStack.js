@@ -27,7 +27,16 @@ const AuthStack = () => {
     if (auth?.role === 'delivery' || auth?.role === 'admin') {
         return (
             <Stack.Navigator initialRouteName="Login">
-                <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+                <Stack.Screen name="Home" component={Home} 
+                options={{ 
+                        title: 'Home', 
+                        headerStyle: {
+                            backgroundColor: '#bababa',
+                        },
+                        headerTintColor: 'black',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },}} />
                 <Stack.Screen name="Scan" component={Scan}
                     options={{
                         title: 'Scan',
