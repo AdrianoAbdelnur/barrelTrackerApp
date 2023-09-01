@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Button, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, Button, ImageBackground, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
@@ -22,7 +22,7 @@ const Scan = () => {
         askForCameraPermission();
     }, [])
 
-    const handleBarCodeScanned = ({ data , type }) => {
+    const handleBarCodeScanned = ({ data, type }) => {
         if (type === 256) {
             setScanned(true);
             setTexto(data)
@@ -55,7 +55,25 @@ const Scan = () => {
                 navigation.navigate('BarrelStatus', { data: data.barrelFound })
             } else navigation.navigate('NewBarrel', { code: id })
         } catch (error) {
-            navigation.navigate('Home')
+            if (error.message === "Request failed with status code 400") {
+                Alert.alert(
+                    'Error',
+                    'Qr desconocido',
+                    [
+                        {
+                            text: 'Cancelar',
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Aceptar',
+                            onPress: () => {
+                                navigation.navigate('Home')    
+                            },
+                        },
+                    ],
+                    { cancelable: false }
+                );
+            } else navigation.navigate('Home')
         }
     }
 
@@ -116,7 +134,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 20
     },
-    text_container:{
+    text_container: {
         justifyContent: 'center'
     }
 });
