@@ -22,10 +22,15 @@ const Scan = () => {
         askForCameraPermission();
     }, [])
 
-    const handleBarCodeScanned = ({ data }) => {
-        setScanned(true);
-        setTexto(data)
-        getBarrel(data)
+    const handleBarCodeScanned = ({ data , type }) => {
+        if (type === 256) {
+            setScanned(true);
+            setTexto(data)
+            getBarrel(data)
+        } else {
+            setTexto("QR not recognized")
+            setScanned(true)
+        }
     }
 
     if (hasPermission === null)
@@ -68,7 +73,9 @@ const Scan = () => {
                         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                         style={{ height: 550, width: 500 }} />
                 </View>
-                <Text style={styles.mainText}>{texto}</Text>
+                <View style={styles.text_container}>
+                    <Text style={styles.mainText}>{texto}</Text>
+                </View>
                 {scanned && <Button title={'scan again'} onPress={() => scanAgain()} color='#4950A1' />}
             </ImageBackground>
         </View>
@@ -96,7 +103,6 @@ const styles = StyleSheet.create({
     mainText: {
         fontSize: 40,
         marginTop: "20%",
-        marginLeft: "10%"
     },
     image: {
         width: '100%',
@@ -109,6 +115,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
         marginBottom: 20
+    },
+    text_container:{
+        justifyContent: 'center'
     }
 });
 
