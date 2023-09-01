@@ -17,7 +17,7 @@ const AuthStack = () => {
     if (isLoading) {
         return (
             <View style={styles.container}>
-                <ImageBackground source={require('./../../assets/images/pirate.jpg')} resizeMode="cover" style={styles.image}>
+                <ImageBackground source={require('./../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
                     <ActivityIndicator size={'large'} />
                 </ImageBackground>
             </View>
