@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Alert, Button, StyleSheet, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
 import DropdownComponent from '../barrels/Dropdown'
+import axios from 'axios'
 
 const Order = ({ route }) => {
     const [list, setList] = useState([])
@@ -13,23 +14,23 @@ const Order = ({ route }) => {
         { label: '30 liters', value: '30' },
         { label: '20 liters', value: '20' },
         { label: '10 liters', value: '10' },
-        { label: '4 liters', value: '5' }
+        { label: '5 liters', value: '5' }
     ];
 
     const addItem = () => {
         if (styleId !== "" && volume !== "") {
             let isStyle = list.find((item) => item.styleId === styleId && item.volume === volume)
             if (isStyle) {
-                const newList = list.map((item)=> {
-                    if (item.styleId === styleId) {
+                const newList = list.map((item) => {
+                    if (item.styleId === styleId && item.volume === volume) {
                         return {
-                            styleId: item.styleId, volume: item.volume, quantity: item.quantity+quantity, styleName: item.styleName
+                            styleId: item.styleId, volume: item.volume, quantity: item.quantity + quantity, styleName: item.styleName
                         }
                     } else return item
                 })
                 setList(newList)
-            }else {
-                const {label} = route.params.styles.find((item)=> item.value === styleId )
+            } else {
+                const { label } = route.params.styles.find((item) => item.value === styleId)
                 setList([...list, { styleId: styleId, volume: volume, quantity: quantity, styleName: label }]);
             }
             setStyleId("");
@@ -49,16 +50,41 @@ const Order = ({ route }) => {
         );
     }
 
+    const deleteItem = (item) => {
+        const filteredList = list.filter(e => !(e.styleId === item.styleId && e.volume === item.volume)) 
+        setList(filteredList)
+    }
+
+    const HandleAddOrder = async () => {
+        try {
+            const payload = {
+                customer: route.params.customer._id,
+                orderList: list
+            }
+            axios.post("https://barreltrackerback.onrender.com/api/order/addNewOrder", payload);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <View>
             <ImageBackground source={require('./../../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
-                <Text>New Order</Text>
-                <Text>Customer: {route.params.customer.barName}</Text>
+                
+                <Text style={styles.title}>Customer: {route.params.customer.barName}</Text>
                 <ScrollView>
                     {
                         list?.map((item) => {
                             return (
-                                <Text key={item.styleId+item.volume}>- {item?.quantity} {item?.styleName} de {item?.volume} litros</Text>
+                                <View key={item.styleId + item.volume} style={styles.itemContainer}>
+                                    <Text style={styles.items} >- {item?.quantity} {item?.styleName} de {item?.volume} litros</Text>
+                                    <TouchableOpacity
+                                        style={styles.deleteButton}
+                                        onPress={()=>deleteItem(item)}
+                                    >
+                                        <Text style={styles.signal}>-</Text>
+                                    </TouchableOpacity>
+                                </View>
                             )
                         })
 
@@ -75,7 +101,7 @@ const Order = ({ route }) => {
                         data={volumeInfo}
                         placeholder='Select a volume'
                     />
-                    <Text>Quantity</Text>
+                    <Text style={styles.items}>Quantity</Text>
                     <View style={styles.quantity}>
                         <TouchableOpacity
                             onPress={() => setQuantity(quantity - 1)}
@@ -83,7 +109,7 @@ const Order = ({ route }) => {
                         >
                             <Text style={styles.signal}>-</Text>
                         </TouchableOpacity>
-                        <Text>{quantity}</Text>
+                        <Text style={styles.quantityText}>{quantity}</Text>
                         <TouchableOpacity
                             onPress={() => setQuantity(quantity + 1)}
                             style={styles.upDownButtons}
@@ -98,6 +124,11 @@ const Order = ({ route }) => {
                         <Text>Add Item</Text>
                     </TouchableOpacity>
                 </ScrollView>
+                <TouchableOpacity
+                    onPress={HandleAddOrder}
+                >
+                    <Text>Enviar Orden</Text>
+                </TouchableOpacity>
             </ImageBackground>
         </View>
     )
@@ -107,7 +138,7 @@ const Order = ({ route }) => {
 const styles = StyleSheet.create({
     quantity: {
         margin: 20,
-        width: '60%',
+        width: '40%',
         flexDirection: 'row',
         justifyContent: 'space-around'
     },
@@ -138,6 +169,31 @@ const styles = StyleSheet.create({
         padding: 0,
         fontSize: 25,
         fontWeight: 'bold'
+    },
+    title: {
+        fontSize:25,
+        fontWeight: 'bold'
+    },
+    itemContainer: {
+        flexDirection: 'row'
+    },
+    items: {
+        fontSize: 20,
+        marginLeft:10,
+    },
+    deleteButton: {
+        backgroundColor: 'red',
+        width: 30,
+        height: 30,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+        marginHorizontal: 20
+
+    },
+    quantityText: {
+        fontSize: 20
     }
 });
 

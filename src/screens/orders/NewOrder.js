@@ -68,6 +68,8 @@ const NewOrder = () => {
     const filteredCustomers = customersData.filter((customer)=> customer.barName.toLowerCase().includes(search.toLowerCase()))
     setFilteredCustomers(filteredCustomers)
   }
+  
+
 
   if (!customersData) {
     return (
