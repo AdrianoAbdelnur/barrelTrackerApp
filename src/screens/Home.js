@@ -1,8 +1,10 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
+import useAuth from "../hooks/useAuth";
 
 const Home = () => {
     const navigation = useNavigation();
+    const { auth } = useAuth()
 
     return (
         <View style={styles.container}>
@@ -11,8 +13,8 @@ const Home = () => {
                     style={styles.OptionsButton}
                     onPress={() => navigation.navigate('Scan')}>
                     <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
-                    <Text
-                        style={styles.buttonText}
+                        <Text
+                            style={styles.buttonText}
                         >Scan a QR code</Text>
                     </ImageBackground>
                 </TouchableOpacity>
@@ -22,9 +24,21 @@ const Home = () => {
                     <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
                         <Text
                             style={styles.buttonText}
-                            >Customers Information</Text>
+                        >Customers Information</Text>
                     </ImageBackground>
                 </TouchableOpacity>
+                {
+                    auth?.role === "admin" &&
+                    <TouchableOpacity
+                        style={styles.OptionsButton}
+                        onPress={() => navigation.navigate('newOrder')}>
+                        <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
+                            <Text
+                                style={styles.buttonText}
+                            >Orders</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                }
             </View>
         </View>
 
@@ -34,11 +48,11 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#34495e',
-        flex: 1,  
+        flex: 1,
         flexDirection: "column",
         alignItems: "center",
     },
-    buttons_container:{
+    buttons_container: {
         height: "60%",
         flexDirection: "column",
         justifyContent: 'space-around'

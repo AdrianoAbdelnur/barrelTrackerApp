@@ -8,6 +8,8 @@ import useAuth from '../hooks/useAuth';
 import NewBarrel from '../screens/barrels/NewBarrel';
 import BarrelStatus from '../screens/barrels/BarrelStatus';
 import CustomersInfo from '../screens/customersInformation/CustomersInfo';
+import NewOrder from '../screens/orders/NewOrder';
+import Order from '../screens/orders/Order';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,19 +26,20 @@ const AuthStack = () => {
         )
     }
 
-    if (auth?.role === 'delivery' || auth?.role === 'admin') {
+    if (auth?.role === 'delivery') {
         return (
-            <Stack.Navigator initialRouteName="Login">
-                <Stack.Screen name="Home" component={Home} 
-                options={{ 
-                        title: 'Home', 
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={Home}
+                    options={{
+                        title: 'Home',
                         headerStyle: {
                             backgroundColor: '#bababa',
                         },
                         headerTintColor: 'black',
                         headerTitleStyle: {
                             fontWeight: 'bold',
-                        },}} />
+                        },
+                    }} />
                 <Stack.Screen name="Scan" component={Scan}
                     options={{
                         title: 'Scan',
@@ -73,6 +76,90 @@ const AuthStack = () => {
                 <Stack.Screen name="CustomersInfo" component={CustomersInfo}
                     options={{
                         title: 'Customers Information',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+            </Stack.Navigator>
+        )
+    }
+
+    if (auth?.role === 'admin') {
+        return (
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen name="Home" component={Home}
+                    options={{
+                        title: 'Home',
+                        headerStyle: {
+                            backgroundColor: '#bababa',
+                        },
+                        headerTintColor: 'black',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }} />
+                <Stack.Screen name="Scan" component={Scan}
+                    options={{
+                        title: 'Scan',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }} />
+                <Stack.Screen name="NewBarrel" component={NewBarrel}
+                    options={{
+                        title: 'New Barrel',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="BarrelStatus" component={BarrelStatus}
+                    options={{
+                        title: 'Barrel Status',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="CustomersInfo" component={CustomersInfo}
+                    options={{
+                        title: 'Customers Information',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="newOrder" component={NewOrder}
+                    options={{
+                        title: 'New Order',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="order" component={Order}
+                    options={{
+                        title: 'Order',
                         headerStyle: {
                             backgroundColor: '#34495e',
                         },
