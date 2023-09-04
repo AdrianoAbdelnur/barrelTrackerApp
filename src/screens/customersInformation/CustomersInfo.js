@@ -22,10 +22,13 @@ const CustomersInfo = () => {
     if (!customersData) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size={'large'} />
+                <ImageBackground source={require('./../../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
+                    <ActivityIndicator size={'large'} />
+                </ImageBackground>
             </View>
         )
     }
+    
     if (customersData) {
 
         return (
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
+        justifyContent: 'center'
     },
     infoBlock: {
         marginTop: 22,
