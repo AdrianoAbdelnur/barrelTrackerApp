@@ -2,8 +2,10 @@ import { View, Text, ScrollView, TouchableOpacity, Alert, Button, StyleSheet, Im
 import React, { useState } from 'react'
 import DropdownComponent from '../barrels/Dropdown'
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
 
 const Order = ({ route }) => {
+    const navigation = useNavigation();
     const [list, setList] = useState([])
     const [styleId, setStyleId] = useState("")
     const [volume, setVolume] = useState("")
@@ -62,6 +64,7 @@ const Order = ({ route }) => {
                 orderList: list
             }
             axios.post("https://barreltrackerback.onrender.com/api/order/addNewOrder", payload);
+            navigation.navigate('newOrder')
         } catch (error) {
             console.log(error)
         }
@@ -106,6 +109,7 @@ const Order = ({ route }) => {
                         <TouchableOpacity
                             onPress={() => setQuantity(quantity - 1)}
                             style={styles.upDownButtons}
+                            disabled={quantity<=1}
                         >
                             <Text style={styles.signal}>-</Text>
                         </TouchableOpacity>
@@ -121,14 +125,17 @@ const Order = ({ route }) => {
                         onPress={addItem}
                         style={styles.addItem}
                     >
-                        <Text>Add Item</Text>
+                        <Text style={styles.addItemText}>Add Item</Text>
                     </TouchableOpacity>
                 </ScrollView>
-                <TouchableOpacity
-                    onPress={HandleAddOrder}
-                >
-                    <Text>Enviar Orden</Text>
-                </TouchableOpacity>
+                <View style={styles.addOrder_container}>
+                    <TouchableOpacity
+                        style={styles.addOrderButton}
+                        onPress={HandleAddOrder}
+                        >
+                        <Text style={styles.addOrderText}>Enviar Orden</Text>
+                    </TouchableOpacity>
+                </View>
             </ImageBackground>
         </View>
     )
@@ -148,7 +155,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 18,
         backgroundColor: 'rgba(128, 128, 128, 0.35)',
         borderRadius: 15,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addItemText: {
+        fontSize: 22,
+        fontWeight: 'bold'
     },
     image: {
         width: '100%',
@@ -159,7 +171,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: 'blue',
+        backgroundColor: '#34495e',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -182,19 +194,36 @@ const styles = StyleSheet.create({
         marginLeft:10,
     },
     deleteButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#9a0526',
         width: 30,
         height: 30,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        
         marginHorizontal: 20
-
     },
     quantityText: {
         fontSize: 20
+    },
+    addOrder_container: {
+        width: '100%',
+        alignItems: 'center'
+    },  
+    addOrderButton: {
+        width: '80%',
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#34495e',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 30,
+    },
+    addOrderText:{
+        fontSize: 25,
+        color: 'white',
+        fontWeight: 'bold'
     }
+
 });
 
 export default Order
