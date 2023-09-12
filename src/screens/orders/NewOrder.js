@@ -99,7 +99,7 @@ const NewOrder = () => {
               filteredCustomers.map(customer => {
                 return (
                   <TouchableOpacity 
-                    key={customer.id}
+                    key={customer._id}
                     style={styles.optionsButton}
                     onPress={() => navigation.navigate('order', { customer: customer, styles: data })}
                   >
