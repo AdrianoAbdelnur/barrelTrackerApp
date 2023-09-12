@@ -53,7 +53,7 @@ const Order = ({ route }) => {
     }
 
     const deleteItem = (item) => {
-        const filteredList = list.filter(e => !(e.styleId === item.styleId && e.volume === item.volume)) 
+        const filteredList = list.filter(e => !(e.styleId === item.styleId && e.volume === item.volume))
         setList(filteredList)
     }
 
@@ -73,7 +73,6 @@ const Order = ({ route }) => {
     return (
         <View>
             <ImageBackground source={require('./../../../assets/images/inox.jpg')} resizeMode="cover" style={styles.image}>
-                
                 <Text style={styles.title}>Customer: {route.params.customer.barName}</Text>
                 <ScrollView>
                     {
@@ -83,7 +82,7 @@ const Order = ({ route }) => {
                                     <Text style={styles.items} >- {item?.quantity} {item?.styleName} de {item?.volume} litros</Text>
                                     <TouchableOpacity
                                         style={styles.deleteButton}
-                                        onPress={()=>deleteItem(item)}
+                                        onPress={() => deleteItem(item)}
                                     >
                                         <Text style={styles.signal}>-</Text>
                                     </TouchableOpacity>
@@ -109,16 +108,16 @@ const Order = ({ route }) => {
                         <TouchableOpacity
                             onPress={() => setQuantity(quantity - 1)}
                             style={styles.upDownButtons}
-                            disabled={quantity<=1}
+                            disabled={quantity <= 1}
                         >
                             <Text style={styles.signal}>-</Text>
                         </TouchableOpacity>
-                        <Text style={styles.quantityText}>{quantity}</Text>
-                        <TouchableOpacity
-                            onPress={() => setQuantity(quantity + 1)}
-                            style={styles.upDownButtons}
-                        >
-                            <Text style={styles.signal}>+</Text>
+                            <Text style={styles.quantityText}>{quantity}</Text>
+                            <TouchableOpacity
+                                onPress={() => setQuantity(quantity + 1)}
+                                style={styles.upDownButtons}
+                            >
+                                <Text style={styles.signal}>+</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
@@ -132,7 +131,7 @@ const Order = ({ route }) => {
                     <TouchableOpacity
                         style={styles.addOrderButton}
                         onPress={HandleAddOrder}
-                        >
+                    >
                         <Text style={styles.addOrderText}>Enviar Orden</Text>
                     </TouchableOpacity>
                 </View>
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     title: {
-        fontSize:25,
+        fontSize: 25,
         fontWeight: 'bold'
     },
     itemContainer: {
@@ -191,7 +190,7 @@ const styles = StyleSheet.create({
     },
     items: {
         fontSize: 20,
-        marginLeft:10,
+        marginLeft: 10,
     },
     deleteButton: {
         backgroundColor: '#9a0526',
@@ -208,7 +207,7 @@ const styles = StyleSheet.create({
     addOrder_container: {
         width: '100%',
         alignItems: 'center'
-    },  
+    },
     addOrderButton: {
         width: '80%',
         height: 60,
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 30,
     },
-    addOrderText:{
+    addOrderText: {
         fontSize: 25,
         color: 'white',
         fontWeight: 'bold'

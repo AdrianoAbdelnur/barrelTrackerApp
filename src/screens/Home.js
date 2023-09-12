@@ -31,7 +31,7 @@ const Home = () => {
                     auth?.role === "admin" &&
                     <TouchableOpacity
                         style={styles.OptionsButton}
-                        onPress={() => navigation.navigate('newOrder')}>
+                        onPress={() => navigation.navigate('orders')}>
                         <ImageBackground source={require('./../../assets/images/inox1.jpg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 15 }}>
                             <Text
                                 style={styles.buttonText}
