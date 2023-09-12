@@ -10,6 +10,8 @@ import BarrelStatus from '../screens/barrels/BarrelStatus';
 import CustomersInfo from '../screens/customersInformation/CustomersInfo';
 import NewOrder from '../screens/orders/NewOrder';
 import Order from '../screens/orders/Order';
+import Orders from '../screens/orders/Orders';
+import OrdersList from '../screens/orders/OrdersList';
 
 const Stack = createNativeStackNavigator();
 
@@ -138,6 +140,28 @@ const AuthStack = () => {
                 <Stack.Screen name="CustomersInfo" component={CustomersInfo}
                     options={{
                         title: 'Customers Information',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="orders" component={Orders}
+                    options={{
+                        title: 'Orders',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="ordersList" component={OrdersList}
+                    options={{
+                        title: 'Orders List',
                         headerStyle: {
                             backgroundColor: '#34495e',
                         },
