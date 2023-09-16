@@ -186,7 +186,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     itemContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        width: '90%',
+        justifyContent: 'space-between'
     },
     items: {
         fontSize: 20,
