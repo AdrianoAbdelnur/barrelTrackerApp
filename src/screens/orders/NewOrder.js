@@ -69,7 +69,10 @@ const NewOrder = () => {
     setFilteredCustomers(filteredCustomers)
   }
   
-
+  const handleNewOrder = (customer) => {
+    navigation.navigate('order', { customer: customer, styles: data })
+    setSearch("")
+  }
 
   if (!customersData) {
     return (
@@ -101,7 +104,7 @@ const NewOrder = () => {
                   <TouchableOpacity 
                     key={customer._id}
                     style={styles.optionsButton}
-                    onPress={() => navigation.navigate('order', { customer: customer, styles: data })}
+                    onPress={()=>handleNewOrder(customer)}
                   >
                     <Text style={styles.option}>{customer.barName}</Text>
                   </TouchableOpacity>
