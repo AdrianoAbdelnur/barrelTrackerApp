@@ -1,17 +1,28 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useAuth from '../../hooks/useAuth';
 
 
 const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState()
-    const { login } = useAuth();
+    const { login, message, setMessage } = useAuth();
+
+    useEffect(() => {
+      if(message) {
+        setTimeout(() => {
+            setMessage("")
+        }, 2000);
+      }
+
+    }, [message])
 
     return (
         <View style={styles.container}>
             <ImageBackground source={require('./../../../assets/images/descarga.jpg')} resizeMode="cover" style={styles.image}>
                 <Image source={require('./../../../assets/icon.png')} style={styles.iconImage}/>
+                {message==="Request failed with status code 400" && <Text>No hemos podido identificarte. Intenta de nuevo</Text>
+                }
                 <TextInput
                     style={styles.input}
                     placeholder='User email'
