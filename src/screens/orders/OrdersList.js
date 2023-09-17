@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Text, ImageBackground, ScrollView, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -8,7 +8,7 @@ const OrdersList = () => {
     useEffect(() => {
         handleGetPendingOrders();
     }, [])
-    
+
 
     const handleGetPendingOrders = async () => {
         try {
@@ -18,6 +18,37 @@ const OrdersList = () => {
             console.log(error)
         }
     }
+
+    const alert = (id) => {
+        Alert.alert(
+            'Cuidado!',
+            `¿Estas seguro que deseas cancelar esta orden?`,
+            [
+                {
+                    text: 'Cancelar',
+                    onPress: () => console.log('Cancelado'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'ok',
+                    onPress: () => {
+                        cancelOrder(id)
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const cancelOrder = async (id) => {
+        try {
+            await axios.patch("https://barreltrackerback.onrender.com/api/order/cancelOrder/" + id)
+            handleGetPendingOrders();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     if (!orders) {
         return (
             <View style={styles.container}>
@@ -27,7 +58,7 @@ const OrdersList = () => {
             </View>
         )
     }
-    
+
     if (orders) {
         return (
             <View>
@@ -36,12 +67,20 @@ const OrdersList = () => {
                         {
                             orders.map(order => {
                                 return (
-                                    <View  style={styles.infoBlock} key={order._id}>
-                                        <Text style={styles.title}>{order.customer.barName}</Text>
+                                    <View style={styles.infoBlock} key={order.customer.barName}>
+                                        <View style={styles.title_container}>
+                                            <Text style={styles.title}>{order.customer.barName}</Text>
+                                            <TouchableOpacity
+                                                style={styles.deleteButton}
+                                                onPress={() => alert(order._id)}
+                                            >
+                                                <Text style={styles.signal}>-</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                         {
-                                            order.orderList.map(item=> {
-                                                return(
-                                                    <View style={styles.items_container} key={item.styleId}>
+                                            order.orderList.map(item => {
+                                                return (
+                                                    <View style={styles.items_container} key={item.styleId + item.volume}>
                                                         <Text style={styles.info}>{item.quantity}</Text>
                                                         <Text style={styles.info}>{item.styleName}</Text>
                                                         <Text style={styles.info}>{item.volume} litros</Text>
@@ -93,10 +132,30 @@ const styles = StyleSheet.create({
         marginHorizontal: 18,
         backgroundColor: 'rgba(128, 128, 128, 0.35)',
         borderRadius: 15
-    },  
+    },
     items_container: {
         flexDirection: 'row'
-    }
+    },
+    title_container: {
+        flexDirection: 'row',
+        width: '90%',
+        justifyContent: 'space-between'
+    },
+    deleteButton: {
+        backgroundColor: '#9a0526',
+        width: 35,
+        height: 35,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    signal: {
+        color: 'white',
+        margin: 0,
+        padding: 0,
+        fontSize: 25,
+        fontWeight: 'bold'
+    },
 });
 
 export default OrdersList

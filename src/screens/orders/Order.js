@@ -186,9 +186,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     itemContainer: {
+        margin: 2,
         flexDirection: 'row',
         width: '90%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     items: {
         fontSize: 20,
@@ -196,8 +197,8 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         backgroundColor: '#9a0526',
-        width: 30,
-        height: 30,
+        width: 35,
+        height: 35,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
