@@ -38,6 +38,7 @@ const BarrelStatus = ({ route }) => {
       handleGetCustomers()
     } else if (barrelData.statusBarrel === "delivered to customer") {
       handleNewSale()
+      statusItemChange()
     }
   }, [barrelData])
 
@@ -208,6 +209,19 @@ const BarrelStatus = ({ route }) => {
   const updatePay = async (id, payload) => {
     try {
       await axios.put("https://barreltrackerback.onrender.com/api/pay/updatePay/" + id, payload)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const statusItemChange = async() => {
+    try {
+      const payload = {
+        customer: barrelData.customer._id,
+        styleId: barrelData.style._id,
+        volume: barrelData.capacity
+      }
+      await axios.put("https://barreltrackerback.onrender.com/api/order/statusItemChange", payload)
     } catch (error) {
       console.log(error)
     }
