@@ -1,6 +1,7 @@
-import { View, Text, ImageBackground, ScrollView, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, ImageBackground, ScrollView, StyleSheet, ActivityIndicator, TouchableOpacity, Alert, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import checkIcon from './../../../assets/images/checkIcon.png'
 
 const OrdersList = () => {
     const [orders, setOrders] = useState()
@@ -81,9 +82,14 @@ const OrdersList = () => {
                                             order.orderList.map(item => {
                                                 return (
                                                     <View style={styles.items_container} key={item.styleId + item.volume}>
+                                                        {item.delivered !== 0 && <Text style={styles.info}>{item.delivered}   /</Text>}
                                                         <Text style={styles.info}>{item.quantity}</Text>
                                                         <Text style={styles.info}>{item.styleName}</Text>
                                                         <Text style={styles.info}>{item.volume} litros</Text>
+                                                        {item.delivered === item.quantity && <View style={styles.icon_container}>
+                                                            <Image source={require('./../../../assets/images/checkIcon.png')} style={styles.iconImage}/>
+                                                            </View>
+                                                            }
                                                     </View>
                                                 )
                                             })
@@ -118,9 +124,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
     },
+    infoHead: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginLeft: 25,
+        textDecorationLine: 'underline',
+    },
     info: {
-        fontSize: 16,
-        marginLeft: 20,
+        fontSize: 17,
+        marginLeft: 10,
+        marginBottom: 4,
+        padding: 4
     },
     image: {
         width: '100%',
@@ -134,7 +148,8 @@ const styles = StyleSheet.create({
         borderRadius: 15
     },
     items_container: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft: 20,
     },
     title_container: {
         flexDirection: 'row',
@@ -156,6 +171,17 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold'
     },
+    iconImage: {
+        width: 40,
+        height: 40,
+        margin: 0,
+    },
+    icon_container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'grey',
+        borderRadius: 12
+    }
 });
 
 export default OrdersList
