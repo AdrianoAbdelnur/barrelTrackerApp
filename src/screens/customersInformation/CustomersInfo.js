@@ -1,8 +1,10 @@
-import { View, Text, ActivityIndicator, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native';
 
 const CustomersInfo = () => {
+    const navigation = useNavigation();
     const [customersData, setCustomersData] = useState("")
 
     useEffect(() => {
@@ -28,7 +30,7 @@ const CustomersInfo = () => {
             </View>
         )
     }
-    
+
     if (customersData) {
 
         return (
@@ -43,6 +45,9 @@ const CustomersInfo = () => {
                                         <Text style={styles.info}>location: {customer.location}</Text>
                                         <Text style={styles.info}>Manager: {customer.barManager}</Text>
                                         <Text style={styles.info}>email: {customer.email}</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('ShowAddressMap', { data: customer })}>
+                                            <Text style={styles.link}>Montrar en mapa</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 )
                             })
@@ -88,6 +93,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 18,
         backgroundColor: 'rgba(128, 128, 128, 0.35)',
         borderRadius: 15
+    },
+    link: {
+        margin: 10,
+        fontSize: 15,
+        color: 'blue', 
+        textDecorationLine: 'underline',
+        alignSelf: 'flex-end'
     }
 });
 
