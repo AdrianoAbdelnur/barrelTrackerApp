@@ -13,6 +13,7 @@ import Order from '../screens/orders/Order';
 import Orders from '../screens/orders/Orders';
 import OrdersList from '../screens/orders/OrdersList';
 import ShowAddressMap from '../screens/customersInformation/ShowAddressMap';
+import DeliveryMap from '../screens/orders/DeliveryMap';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +91,17 @@ const AuthStack = () => {
                 <Stack.Screen name="ShowAddressMap" component={ShowAddressMap}
                     options={{
                         title: 'Dirección en mapa',
+                        headerStyle: {
+                            backgroundColor: '#34495e',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }, headerBackVisible: false
+                    }} />
+                <Stack.Screen name="DeliveryMap" component={DeliveryMap}
+                    options={{
+                        title: 'Ruta de Reparto',
                         headerStyle: {
                             backgroundColor: '#34495e',
                         },
@@ -215,6 +227,17 @@ const AuthStack = () => {
                             fontWeight: 'bold',
                         }, headerBackVisible: false
                     }} />
+                <Stack.Screen name="DeliveryMap" component={DeliveryMap}
+                options={{
+                    title: 'Ruta de Reparto',
+                    headerStyle: {
+                        backgroundColor: '#34495e',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }, headerBackVisible: false
+                }} />
             </Stack.Navigator>
         )
     }

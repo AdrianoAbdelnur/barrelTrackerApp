@@ -2,9 +2,10 @@ import { View, Text, ImageBackground, ScrollView, StyleSheet, ActivityIndicator,
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import checkIcon from './../../../assets/images/checkIcon.png'
-
+import { useNavigation } from '@react-navigation/native'
 const OrdersList = () => {
     const [orders, setOrders] = useState()
+    const navigation = useNavigation();
 
     useEffect(() => {
         handleGetPendingOrders();
@@ -97,9 +98,16 @@ const OrdersList = () => {
                                     </View>
                                 )
                             })
-
                         }
                     </ScrollView>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => { navigation.navigate('DeliveryMap', { data: orders })}}
+                        >
+                            <Text style={styles.textButton}>Ver ruta de reparto</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ImageBackground>
             </View>
         )
@@ -181,6 +189,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'grey',
         borderRadius: 12
+    },
+    buttonContainer: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 30,
+    },
+    button: {
+        width: "90%",
+        backgroundColor: "#bbb",
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    textButton: {
+        fontSize: 20,
+        fontWeight: "bold"
     }
 });
 
